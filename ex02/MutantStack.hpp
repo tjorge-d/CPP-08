@@ -2,8 +2,6 @@
 # define MUTANTSTACK_HPP
 # include <stdio.h>
 # include <iostream>
-# include <string.h>
-# include <fstream>
 # include <deque>
 # include <stack>
 
@@ -16,11 +14,12 @@ class MutantStack : public std::stack<T>
 		~MutantStack();
 		MutantStack&	operator=(const MutantStack &copy);
 
-		typedef typename std::deque<T>::iterator	iterator;
-		iterator	begin();
-		iterator	rbegin();
-		iterator	end();
-		iterator	rend();
+		typedef typename std::deque<T>::iterator			iterator;
+		typedef typename std::deque<T>::reverse_iterator	reverse_iterator;
+		iterator			begin();
+		iterator			end();
+		reverse_iterator	rbegin();
+		reverse_iterator	rend();
 };
 
 # include "MutantStack.tpp"
