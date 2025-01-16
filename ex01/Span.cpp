@@ -22,7 +22,7 @@ Span::Span(const Span &copy)
 
 Span::~Span()
 {
-	std::cout << "Span default destructor called\n";
+	//std::cout << "Span default destructor called\n";
 }
 
 // GETTERS
@@ -35,9 +35,11 @@ Span::~Span()
 
 Span&	Span::operator=(const Span &copy)
 {
-	std::cout << "Span copy assignment operator called\n";
-	//_example = copy._example;
-	(void)copy;
+	//std::cout << "Span copy assignment operator called\n";
+	std::vector<int> new_vec;
+	new_vec.reserve(copy._vec.capacity());
+	new_vec = copy._vec;
+	std::swap(this->_vec , new_vec);
 	return (*this);
 }
 
@@ -51,17 +53,37 @@ void	Span::addNumber(int n)
 		throw MaxCapacityReached();
 }
 
-void	Span::print()
+void	Span::fillRandomly(int min, int max)
 {
-	for (unsigned long i = 0; i < _vec.size(); i++)
-        std::cout << _vec[i] << " ";
+	if (_vec.size() == _vec.capacity())
+		throw MaxCapacityReached();
+	srand(time(NULL));
+	while(_vec.size() != _vec.capacity())
+		_vec.push_back(min + std::rand() % (max - min + 1));
+}
+
+void	Span::printVec()
+{
+	std::cout << "|";
+	for (std::vector<int>::iterator i = _vec.begin(); i != _vec.end(); ++i)
+        std::cout << " " << *i << " |";
+	std::cout << std::endl;
 }
 
 int		Span::shortestSpan()
 {
 	if (_vec.size() < 2)
 		throw LessThanTwoNumbers();
-	
+
+	std::vector<int> tmp = _vec;
+	std::sort(tmp.begin(), tmp.end());
+	int diff = *(tmp.end() - 1) - *tmp.begin();
+	for (std::vector<int>::iterator i = tmp.begin(); i + 1 != tmp.end(); ++i)
+	{
+		if (*(i + 1) - *i < diff)
+			diff = *(i + 1) - *i;
+	}
+	return (diff);
 }
 
 int		Span::longestSpan()

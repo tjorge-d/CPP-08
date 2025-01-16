@@ -21,9 +21,10 @@ class Span
 		Span&	operator=(const Span &copy);
 		
 		void	addNumber(int n);
-		void	print();
+		void	fillRandomly(int min, int max);
 		int		shortestSpan();
 		int		longestSpan();
+		void	printVec();
 
 	class	MaxCapacityReached: public std::exception
 	{
